@@ -1,11 +1,10 @@
-namespace MidpointLineAlg
+﻿namespace MidpointLineAlg
 {
     public partial class Form1 : Form
     {
         Bitmap bmp;
         Graphics g;
         Random rnd = new Random();
-        int thickness;
         Color color;
 
         public Form1()
@@ -19,13 +18,12 @@ namespace MidpointLineAlg
             g = Graphics.FromImage(bmp);
             string selectedColor = comboBox1.SelectedItem.ToString() ?? "Negru";
             color = SelectedColor(selectedColor);
-            thickness = (int)numericUpDown1.Value;
 
-            Point p1 = new Point(rnd.Next(pictureBox1.Width), rnd.Next(pictureBox1.Height));
-            Point p2 = new Point(rnd.Next(pictureBox1.Width), rnd.Next(pictureBox1.Height));
-
-            g.FillEllipse(new SolidBrush(Color.Blue), p1.X - 4, p1.Y - 4, thickness+8, thickness+8);
-            g.FillEllipse(new SolidBrush(Color.Red), p2.X - 4, p2.Y - 4, thickness +8,thickness+8);
+           Point p1 = new Point(rnd.Next(pictureBox1.Width), rnd.Next(pictureBox1.Height));
+           Point p2 = new Point(rnd.Next(pictureBox1.Width), rnd.Next(pictureBox1.Height));
+         
+            g.FillEllipse(new SolidBrush(Color.Blue), p1.X - 4, p1.Y - 4, 8, 8);
+            g.FillEllipse(new SolidBrush(Color.Red), p2.X - 4, p2.Y - 4, 8, 8);
 
             if (p2.X < p1.X)
             {
@@ -35,10 +33,10 @@ namespace MidpointLineAlg
             }
             if (p2.X - p1.X >= Math.Abs(p2.Y - p1.Y))
             {
-                int sign = 1;
+                int direction = 1;
                 if (p2.Y < p1.Y)
-                    sign = -1;
-                MidPointLineX(p1, p2, sign, thickness, color);
+                    direction = -1;
+                MidPointLineLow(p1, p2, direction, color);
             }
             else
             {
@@ -48,22 +46,23 @@ namespace MidpointLineAlg
                     p1 = new Point(p2.X, p2.Y);
                     p2 = p;
                 }
-                int sign = 1;
+                int direction = 1;
                 if (p2.X < p1.X)
-                    sign = -1;
-                MidPointLineY(p1, p2, sign, thickness, color);
+                    direction = -1;
+                MidPointLineHigh(p1, p2, direction, color);
             }
             pictureBox1.Image = bmp;
         }
 
-        void MidPointLineX(Point p1, Point p2, int sign, int thickness, Color color)
+        //panta mai apropiata de orizontala
+        void MidPointLineLow(Point p1, Point p2, int direction, Color color)
         {
             int dx = p2.X - p1.X, dy = Math.Abs(p2.Y - p1.Y);
             int d = 2 * dy - dx;
             int incrE = 2 * dy, incrNE = 2 * (dy - dx);
             int x = p1.X, y = p1.Y;
-            
-            DrawPoint(x, y, thickness, color);
+
+            bmp.SetPixel(x, y, color);
             while (x < p2.X)
             {
                 if (d < 0)
@@ -71,22 +70,23 @@ namespace MidpointLineAlg
                 else
                 {
                     d += incrNE;
-                    y += sign;
+                    y += direction;
                 }
                 x++;
-               
-                DrawPoint(x, y, thickness, color);
+
+                bmp.SetPixel(x, y, color);
             }
         }
 
-        void MidPointLineY(Point p1, Point p2, int sign, int thickness, Color color)
+        //panta mai apropiata de verticala
+        void MidPointLineHigh(Point p1, Point p2, int direction, Color color)
         {
             int dx = Math.Abs(p2.X - p1.X), dy = p2.Y - p1.Y;
             int d = 2 * dy - dx;
             int incrE = 2 * dx, incrNE = 2 * (dx - dy);
             int x = p1.X, y = p1.Y;
-            
-            DrawPoint(x, y, thickness, color);
+
+            bmp.SetPixel(x, y, color);
 
             while (y < p2.Y)
             {
@@ -95,32 +95,17 @@ namespace MidpointLineAlg
                 else
                 {
                     d += incrNE;
-                    x += sign;
+                    x += direction;
                 }
                 y++;
-               
-                DrawPoint(x, y, thickness, color);
-            }
-        }
 
-        void DrawPoint(int x, int y, int thickness,  Color color)
-        {
-            for (int i=-thickness/2; i<=thickness/2; i++)
-            {
-                for(int j=-thickness/2; j<=thickness/2; j++)
-                {
-                    int newX = x + i;
-                    int newY= y + j;
-
-                    if (newX >= 0 && newX < bmp.Width && newY >= 0 && newY < bmp.Height)
-                        bmp.SetPixel(newX, newY, color);
-                }
+                bmp.SetPixel(x, y, color);
             }
         }
 
         private Color SelectedColor(string colorName)
         {
-            switch(colorName)
+            switch (colorName)
             {
                 case "Negru":
                     return Color.Black;
