@@ -19,9 +19,9 @@
             string selectedColor = comboBox1.SelectedItem.ToString() ?? "Negru";
             color = SelectedColor(selectedColor);
 
-           Point p1 = new Point(rnd.Next(pictureBox1.Width), rnd.Next(pictureBox1.Height));
-           Point p2 = new Point(rnd.Next(pictureBox1.Width), rnd.Next(pictureBox1.Height));
-         
+            Point p1 = new Point(rnd.Next(pictureBox1.Width), rnd.Next(pictureBox1.Height));
+            Point p2 = new Point(rnd.Next(pictureBox1.Width), rnd.Next(pictureBox1.Height));
+            
             g.FillEllipse(new SolidBrush(Color.Blue), p1.X - 4, p1.Y - 4, 8, 8);
             g.FillEllipse(new SolidBrush(Color.Red), p2.X - 4, p2.Y - 4, 8, 8);
 
