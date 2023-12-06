@@ -31,6 +31,9 @@
             pictureBox1 = new PictureBox();
             btnGenerateOriginal = new Button();
             btnScale = new Button();
+            lblOriginalCoordinates = new Label();
+            lblScalingFactor = new Label();
+            lblScaledCoordinates = new Label();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
@@ -44,7 +47,7 @@
             // 
             // btnGenerateOriginal
             // 
-            btnGenerateOriginal.Location = new Point(1070, 699);
+            btnGenerateOriginal.Location = new Point(1432, 699);
             btnGenerateOriginal.Name = "btnGenerateOriginal";
             btnGenerateOriginal.Size = new Size(183, 95);
             btnGenerateOriginal.TabIndex = 1;
@@ -54,7 +57,7 @@
             // 
             // btnScale
             // 
-            btnScale.Location = new Point(1070, 587);
+            btnScale.Location = new Point(1432, 564);
             btnScale.Name = "btnScale";
             btnScale.Size = new Size(183, 94);
             btnScale.TabIndex = 2;
@@ -62,11 +65,38 @@
             btnScale.UseVisualStyleBackColor = true;
             btnScale.Click += btnScale_Click;
             // 
+            // lblOriginalCoordinates
+            // 
+            lblOriginalCoordinates.AutoSize = true;
+            lblOriginalCoordinates.Location = new Point(1089, 12);
+            lblOriginalCoordinates.Name = "lblOriginalCoordinates";
+            lblOriginalCoordinates.Size = new Size(0, 25);
+            lblOriginalCoordinates.TabIndex = 3;
+            // 
+            // lblScalingFactor
+            // 
+            lblScalingFactor.AutoSize = true;
+            lblScalingFactor.Location = new Point(1089, 121);
+            lblScalingFactor.Name = "lblScalingFactor";
+            lblScalingFactor.Size = new Size(0, 25);
+            lblScalingFactor.TabIndex = 4;
+            // 
+            // lblScaledCoordinates
+            // 
+            lblScaledCoordinates.AutoSize = true;
+            lblScaledCoordinates.Location = new Point(1089, 236);
+            lblScaledCoordinates.Name = "lblScaledCoordinates";
+            lblScaledCoordinates.Size = new Size(0, 25);
+            lblScaledCoordinates.TabIndex = 5;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1266, 806);
+            ClientSize = new Size(1978, 806);
+            Controls.Add(lblScaledCoordinates);
+            Controls.Add(lblScalingFactor);
+            Controls.Add(lblOriginalCoordinates);
             Controls.Add(btnScale);
             Controls.Add(btnGenerateOriginal);
             Controls.Add(pictureBox1);
@@ -74,6 +104,7 @@
             Text = "Form1";
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
@@ -81,5 +112,8 @@
         private PictureBox pictureBox1;
         private Button btnGenerateOriginal;
         private Button btnScale;
+        private Label lblOriginalCoordinates;
+        private Label lblScalingFactor;
+        private Label lblScaledCoordinates;
     }
 }

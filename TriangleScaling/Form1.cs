@@ -16,22 +16,32 @@ namespace TriangleScaling
         private void PictureBox_Paint(object sender, PaintEventArgs e)
         {
             Graphics g = e.Graphics;
-            if(currentTriangle != null ) 
+            if (currentTriangle != null)
+            {
                 g.DrawPolygon(Pens.Green, currentTriangle);
+                lblOriginalCoordinates.Text = $"Coordonate initiale: ({currentTriangle[0].X}, {currentTriangle[0].Y}), ({currentTriangle[1].X}, {currentTriangle[1].Y}), ({currentTriangle[2].X}, {currentTriangle[2].Y})";
+            }
         }
 
         private void btnGenerateOriginal_Click(object sender, EventArgs e)
         {
             GenerateRandomTriangle();
             pictureBox1.Invalidate();
+
+            lblOriginalCoordinates.Text = "";
+            lblScaledCoordinates.Text = "";
+            lblScalingFactor.Text = "";
         }
 
         private void btnScale_Click(object sender, EventArgs e)
         {
             GenerateRandomScaling();
-            PointF[] scaledTriangle=MultiplyMatrix(currentTriangle, scalingMatrix);
-            Graphics g=pictureBox1.CreateGraphics();
+            PointF[] scaledTriangle = MultiplyMatrix(currentTriangle, scalingMatrix);
+            Graphics g = pictureBox1.CreateGraphics();
             g.DrawPolygon(Pens.Red, scaledTriangle);
+
+            lblScaledCoordinates.Text = $"Coordonate scalate: ({scaledTriangle[0].X}, {scaledTriangle[0].Y}), ({scaledTriangle[1].X}, {scaledTriangle[1].Y}), ({scaledTriangle[2].X}, {scaledTriangle[2].Y})";
+            lblScalingFactor.Text = $"Factorul de scalare: {scalingMatrix[0, 0]}";
         }
 
         private void GenerateRandomTriangle()
@@ -48,14 +58,14 @@ namespace TriangleScaling
         private void GenerateRandomScaling()
         {
             Random random = new Random();
-            float scalingFactor=(float)(random.NextDouble() * 1.9 + 0.1);
-            scalingMatrix=new Matrix3x3(scalingFactor, 0, 0, 0, scalingFactor, 0, 0, 0, 1);
+            float scalingFactor = (float)(random.NextDouble() * 1.9 + 0.1);
+            scalingMatrix = new Matrix3x3(scalingFactor, 0, 0, 0, scalingFactor, 0, 0, 0, 1);
         }
-       
+
         private PointF[] MultiplyMatrix(PointF[] input, Matrix3x3 matrix)
         {
             PointF[] result = new PointF[input.Length];
-            for (int i=0; i < input.Length;i++)
+            for (int i = 0; i < input.Length; i++)
             {
                 float x = input[i].X;
                 float y = input[i].Y;
